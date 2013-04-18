@@ -10,7 +10,7 @@ usage: python deploy.py -c config.ini -e exc.ini -u ./package -p /root/downloads
 
 
 
-####Config Server :
+####Config Server config.ini:
 
 config use password
 * host,port,user,passwd
@@ -25,7 +25,7 @@ e.g.
 
 
 
-####Config Exceute Commend:
+####Config Exceute Commend exc.ini:
 
 ls -ls |head -n 10
 grep a . |head -n 10
