@@ -1,16 +1,16 @@
 auto_deploy
 ===========
 
-Server Auto Deploy Tool
+#Server Auto Deploy Tool
 
 
-Usage:
+#Usage:
 
 usage: python deploy.py -c config.ini -e exc.ini -u ./package -p /root/downloads/dw
 
 
 
-Config Server :
+#Config Server :
 
 config use password
 * host,port,user,passwd
@@ -25,7 +25,7 @@ e.g.
 
 
 
-Config Exceute Commend:
+#Config Exceute Commend:
 
 ls -ls |head -n 10
 grep a . |head -n 10
