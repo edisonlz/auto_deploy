@@ -32,3 +32,5 @@ grep a . |head -n 10
 
 .....
 
+####depend on
+easy_install paramiko
