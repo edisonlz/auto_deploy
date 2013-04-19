@@ -15,6 +15,7 @@ import re
 from stat import *
 from threading import Thread
 from optparse import OptionParser
+import logging
 
 
 delimit = re.compile(r"\s+")
@@ -173,9 +174,13 @@ def deploy(config, localpath, script):
         print "[Config Error] Client Not Connected!"
         return
 
+    chan = client.get_transport().open_session()
+
+    print
     print("###########################[On %s]###########################" % host)
+    print
     if localpath:
-        printWrap(execCommand("mkdir -p %s" % remote_path, client, host))
+        printWrap(execCommand("mkdir -p %s" % remote_path, chan, host))
 
         mode = os.stat(localpath)[ST_MODE]
         if S_ISDIR(mode):
@@ -188,7 +193,8 @@ def deploy(config, localpath, script):
         for x in xrange(len(script)):
             command = script[x]
             if command[0] != "#":
-                print "\033[0;32;40m[%d]:%s\n" % (x, command)
+                #print "\033[0;32;40m[%d]:%s\n" % (x, command)
+                print "[%d]:%s\n" % (x, command)
                 printWrap(execCommand(command, client, host))
 
 
@@ -212,15 +218,18 @@ def run(localpath, configfile, extentScript):
 
 
 def printWrap(listset):
-    print "\033[0;31;44m-------------------------------------------------------------------------------------"
+    #print "\033[0;31;44m-------------------------------------------------------------------------------------"
+    print "-" * 60
     #print listset
     if(len(listset) == 0):
-        print "\033[0;31;44m|...																				 |"
+        #print "\033[0;31;44m|...																				 |"
+        print "." * 6
     else:
         for i in xrange(len(listset)):
             print "|", listset[i].strip()
-        print "\033[0;31;44m-------------------------------------------------------------------------------------"
-
+        #print "\033[0;31;44m-------------------------------------------------------------------------------------"
+        print "-" * 60
+    
 
 if __name__ == "__main__":
     parser = OptionParser("usage: python deploy.py -c config.ini -e exc.ini -u ./package -p /root/downloads/dw")
