@@ -50,7 +50,6 @@ def getSshClientByPkey(host, port, user, pkey, encrypt_type="rsa"):
     else:
         mykey = paramiko.RSAKey.from_private_key_file(privatekeyfile)
 
-
     try:
         client.connect(host, port=port, username=user, pkey=mykey)
     except paramiko.SSHException, msg:
@@ -63,7 +62,13 @@ def getSshClientByPkey(host, port, user, pkey, encrypt_type="rsa"):
 
 
 def onSendOK(arg1, arg2):
-    print "\033[0;33;40m|Send %s,Rate %.2f%% :Total %s OK" % (arg1, float(arg1) / arg2 * 100, arg2), "\r",
+    width = 40
+    per = int(float(arg1) / arg2 * width)
+    less = width - per
+    progress_bar = "#" * per + "->" + " " * less
+    #print "Send %s,Rate %.2f%%:Total %s OK" % (arg1, float(arg1) / arg2 , arg2), "\r"
+    print "\033[0;33;40m|Send %s,Rate %.2f%%:[%s]Total %s OK" % (
+        arg1, float(arg1) / arg2 * 100, progress_bar, arg2), "\r",
 
 
 def sendFile(path, client, host):
@@ -230,9 +235,9 @@ def printWrap(listset):
     else:
         for i in xrange(len(listset)):
             print "|", listset[i].strip()
-        #print "\033[0;31;44m-------------------------------------------------------------------------------------"
+            #print "\033[0;31;44m-------------------------------------------------------------------------------------"
         print "-" * 60
-    
+
 
 if __name__ == "__main__":
     parser = OptionParser("usage: python deploy.py -c config.ini -e exc.ini -u ./package -p /root/downloads/dw")
