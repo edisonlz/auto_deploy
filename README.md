@@ -27,10 +27,20 @@ e.g.
 
 ####Config Exceute Commend exc.ini:
 
-ls -ls |head -n 10
-grep a . |head -n 10
+* ls -ls |head -n 10
+* grep a . |head -n 10
 
 .....
+
+
+####Why can’t I run programs in the background with &? It makes paramiko hang.
+
+Run the program under nohup and redirect stdin, stdout and stderr to /dev/null (or to your file of choice, if you need the output later):
+
+run("nohup yes >& /dev/null < /dev/null &")
+(yes is simply an example of a program that may run for a long time or forever; >&, < and & are Bash syntax for pipe redirection and backgrounding, respectively – see your shell’s man page for details.)
+
+
 
 ####depend on
 easy_install paramiko
