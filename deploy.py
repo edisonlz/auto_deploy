@@ -93,6 +93,9 @@ def execCommand(cmd, client, host):
     try:
         stdin, stdout, stderr = client.exec_command(cmd)
         results = stdout.readlines()
+        error_log = stderr.readlines()
+        if error_log:
+            results.extend(error_log)
         return results
     except paramiko.SSHException, msg:
         print "SSH Error: %s", host, msg
